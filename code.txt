@@ -1,0 +1,69 @@
+<html>
+<head>
+  <title>Score Game</title>
+  <style>
+    .game-container {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .scoreboard {
+      margin-top: 20px;
+    }
+    .scoreboard p {
+      margin: 5px 0;
+    }
+    .btn {
+      display: inline-block;
+      padding: 8px 12px;
+      background-color: #4CAF50;
+      color: white;
+      text-decoration: none;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="game-container">
+    <h1>Score Game</h1>
+    <button onclick="increaseScore()" class="btn">Increase Score</button>
+    <div class="scoreboard">
+      <h3>Scoreboard</h3>
+      <div id="scores"></div>
+    </div>
+  </div>
+
+  <script>
+    function increaseScore() {
+      if (typeof(Storage) !== "undefined") {
+        if (localStorage.score) {
+          localStorage.score = Number(localStorage.score) + 1;
+        } else {
+          localStorage.score = 1;
+        }
+        updateScoreboard();
+      } else {
+        alert("Sorry, your browser does not support web storage. Scores cannot be saved.");
+      }
+    }
+
+    function updateScoreboard() {
+      var scoresDiv = document.getElementById("scores");
+      scoresDiv.innerHTML = "";
+      var scoreCount = localStorage.score || 0;
+
+      for (var i = 1; i <= scoreCount; i++) {
+        var scoreItem = document.createElement("p");
+        scoreItem.innerText = "Score " + i;
+        scoresDiv.appendChild(scoreItem);
+      }
+    }
+
+    updateScoreboard();
+  </script>
+</body>
+</html>
